@@ -18,6 +18,22 @@ int tilt_line_left(int length,int *line)
   
   return t; 
 }
+int tilt_line_Right(int length,int *line){ 
+              int sutt=0; 
+  // make sure vector length is sensible
+             if (length<1||length>255) return -1;
+
+  // slide tiles to the left 
+   
+  shift_line_Right(length,line);
+ sutt=+ combine_tiles(length,line,1);
+    
+  shift_line_Right(length,line);
+
+              
+            return sutt;
+    
+}
 
 int shift_line_left(int length, int *line){
   	int i,y;
