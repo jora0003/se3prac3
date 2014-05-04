@@ -34,3 +34,29 @@ int shift_line_left(int length, int *line){
    }
     return 0; 	
   }
+  
+  
+  int shift_line_Right(int length, int *line){
+  
+  	int i,y;
+   int last_index = length - 1;
+   int size=length;
+  	
+  	if (length<1||length>255 || !line) return -1;
+  	
+   while(size>0){
+   	for (i = last_index; i > 0; i--) {
+        
+            if (line[i] ==0 && line[i-1]!=0 ) {
+               y=line[i-1];
+			   line[i]=y;
+			   line[i-1]=0 ; 
+			   break;
+            }
+        } 
+		    	size--;
+   }
+  return 0;
+  }
+  
+  
