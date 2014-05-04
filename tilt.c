@@ -3,14 +3,20 @@
 
 int tilt_line_left(int length,int *line)
 {
+ int  t=0 ; 
   // make sure vector length is sensible
   if (length<1||length>255) return -1;
 
-  // slide tiles to the left
-
+  // slide tiles to the left 
+   
+  shift_line_left(length,line);
+  
   // combine tiles as required
-
-  return 0;
+ t=+ combine_tiles(length,line,0);
+    
+  shift_line_left(length,line);
+  
+  return t; 
 }
 
 int shift_line_left(int length, int *line){
