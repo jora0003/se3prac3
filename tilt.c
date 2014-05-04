@@ -59,4 +59,41 @@ int shift_line_left(int length, int *line){
   return 0;
   }
   
+  int combine_tiles(int length,int *line,int offset){
+	 int y,s=0,sum;
+    
+    if (length<1||length>255 || !line) return -1;
+    
+    if (offset==0){
+    	
+    	for (y = 0; y < length; y++) {
+
+            if (line[y] == line[y+1]) {
+                s=line[y]+line[y+1];
+                line[y]=s;
+                line[y+1]=0; 
+                sum+=s;
+            }
+            	
+        } 
+
+    }
+     if(offset==1){
+     	
+     	for (y = length-1; y >=0; y--) {
+
+            if (line[y] == line[y-1]) {
+                s=line[y]+line[y-1];
+                line[y]=s;
+                line[y-1]=0; 
+                sum+=s;
+            }
+            	
+        } 
+     
+     }
+     return sum;
+     
+}
+
   
