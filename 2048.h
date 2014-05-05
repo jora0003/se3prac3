@@ -19,3 +19,4 @@ int tilt_line_left(int length,int *line);
 int tilt_line_Right(int length,int *line)
 int shift_line_left(int length, int *line);
 int shift_line_Right(int length, int *line);
+int board_read_column(int size, int **board, int column, int *column_Array);
