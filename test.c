@@ -432,6 +432,55 @@ int vector_board_read_column(int in[16], int column, int out[4])
     
 }
 
+ 
+
+
+int board_vector_down( int befor[16], int after[16])
+{
+   return board_vector_test(befor, after, tilt_board_down);
+}
+ 
+ int test_tilt_board_down()
+{
+   int e = 0;
+   int beforBoard0[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+   int afterBoard0[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+   e|= board_vector_down(beforBoard0, afterBoard0);
+   
+   int beforBoard1[16] = {0,0,0,0,
+                          2,0,1,0,
+                          0,0,0,0,
+                          0,0,0,0};
+   int afterBoard1[16] = {0,0,0,0,
+                          0,0,0,0,
+                          0,0,0,0,
+                          2,0,1,0};
+   e|= board_vector_down(beforBoard1, afterBoard1);
+   
+   
+   int beforBoard2[16] = {0,0,0,0,
+                          2,2,1,2,
+                          0,0,0,0,
+                          0,0,1,0};
+   int afterBoard2[16] = {0,0,0,0,
+                          0,0,0,0,
+                          0,0,0,0,
+                          2,2,2,2};
+   e|= board_vector_down(beforBoard2, afterBoard2);
+   
+   int beforBoard3[16] = {2,0,2,2,
+                          1,0,1,0,
+                          0,0,0,0,
+                          0,2,1,0};
+   int afterBoard3[16] = {0,0,0,0,
+                          0,0,0,0,
+                          2,0,2,0,
+                          1,2,2,2};
+   e|= board_vector_down(beforBoard3, afterBoard3);
+      
+   return e;
+}
+
   
 int main(int argc,char **argv)
 {
@@ -444,5 +493,6 @@ int main(int argc,char **argv)
   e|=test_tilt_Right();
   e|=test_board_read_column();
   e|=test_board_set_column();
+  e|= test_tilt_board_down()
   return e;
 }
