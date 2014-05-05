@@ -196,14 +196,82 @@ int ttl_vector_combine_line_Right(int i1,int i2,int i3,int i4,char *msg,
 }
 
 
+ int test_board_read_column(){
+ 	
+ 	int e = 0;
+   int board[16]=  {1, 0, 2, 0, 
+                    0, 2, 2, 0, 
+                    0, 0, 2, 0, 
+                    1, 0, 2, 0};
+   
+   int column0[4] = {1, 0, 0, 1};
+   e|= vector_board_read_column(board, 0, column0);
+   
+   int column1[4] = {0, 2, 0, 0};
+   e|= vector_board_read_column(board, 1, column1);
+   
+   int column2[4] = {2, 2, 2, 2};
+   e|= vector_board_read_column(board, 2, column2);
+   
+   
+   int column3[4] = {0, 0, 0, 0};
+    e|= vector_board_read_column(board, 3, column3);
+   
+   return e;
+ 	
+ 	
+ 	
+ }
+ 
+int vector_board_read_column(int in[16], int column, int out[4])
+{
+   int **board = calloc(4, sizeof(int *));
+   int i = 0;
+   int j = 0;
+   for(i = 0; i < 4; ++i)
+   {
+      board[i] = calloc(4, sizeof(int));
+      for(j = 0; j < 4; ++j)
+      {
+         int index = 4 * i + j;
+         board[i][j] =  in[index];
+      }
+   }
+   
 
+   printf("Read column %d from {\n {%d,%d,%d,%d}\n {%d,%d,%d,%d}\n {%d,%d,%d,%d}\n {%d,%d,%d,%d}} \n yields {%d,%d,%d,%d} - ",
+             column, 
+             in[0], in[1], in[2], in[3], 
+             in[4], in[5], in[6], in[7],
+             in[8], in[9], in[10], in[11], 
+             in[12], in[13], in[14], in[15],
+             out[0], out[1], out[2], out[3]);
+      
+   fflush(stdout);
+   int t[4] = {-1, -1, -1, -1};
+   board_read_column(4, board, column, t);
+    if (
+          (out[0]!=t[0])||(out[1]!=t[1])||(out[2]!=t[2])|| (out[3]!=t[3]))
+        {
+	     printf("FAILED: Get column %d from {{%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}} returned {%d,%d,%d,%d} instead of"
+                 " {%d,%d,%d,%d}\n",
+                 column,
+                 in[0], in[1], in[2], in[3], 
+                 in[4], in[5], in[6], in[7],
+                 in[8], in[9], in[10], in[11], 
+                 in[12], in[13], in[14], in[15],
+                 t[0], t[1], t[2], t[3], 
+                 out[0], out[1], out[2], out[3]);
+         
+          return -1;
+        } 
+    
+      printf("PASSED.\n");
+      return 0;
+    
+}
 
-
-
-
-
-
-
+ 
 int main(int argc,char **argv)
 {
   int e=0;
@@ -213,6 +281,6 @@ int main(int argc,char **argv)
   e|=test_combine_line_Right();
   e|=test_tilt_left();
   e|=test_tilt_Right();
-  
+  e|=test_board_read_column();
   return e;
 }
