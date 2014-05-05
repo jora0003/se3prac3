@@ -133,5 +133,17 @@ int shift_line_left(int length, int *line){
   return sumDown;
 }
   
+  int tilt_board_left(int size,int **board){
+	
+	int sumLeft;
+	if (size<1||size>255||!board) return -1;
+  int line = 0;
+  
+  for(line = 0; line < size; ++line)
+  {
+     sumLeft+= tilt_line_left(size, board[line]);
+  }
+  return sumLeft;
+}
   
   
