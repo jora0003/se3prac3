@@ -160,3 +160,18 @@ int shift_line_left(int length, int *line){
 	
 	
 }
+int tilt_board_up(int size,int **board){
+  // make sure size of board is sensible
+  if (size<1||size>255||!board) return -1;
+  int column = 0;
+  int sumUp = 0;
+  for(column = 0; column < size; ++column)
+  {
+     int *column_Array = calloc(size, sizeof(int));
+     board_read_column(size, board, column, column_Array);
+     sumUp += tilt_line_left(size, column_Array);
+     board_set_column(size, board, column, column_Array);
+  }
+  return sumUp;
+}
+
