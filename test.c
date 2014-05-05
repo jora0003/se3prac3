@@ -370,6 +370,69 @@ int vector_board_read_column(int in[16], int column, int out[4])
       return 0;
 }
  
+ 
+ 
+  int board_vector_test(int in[16], int out[16],int (*func)(int,int **))
+{
+   int **board = calloc(4, sizeof(int *));
+   int i = 0;
+   int j = 0;
+   for(i = 0; i < 4; ++i)
+   {
+      board[i] = calloc(4, sizeof(int));
+      for(j = 0; j < 4; ++j)
+      {
+         int index = 4 * i + j;
+         board[i][j] =  in[index];
+      }
+   }
+   
+  
+      printf("\n{{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n{%d,%d,%d,%d}}  \nafter yields\n {{%d,%d,%d,%d}\n {%d,%d,%d,%d}\n {%d,%d,%d,%d}\n {%d,%d,%d,%d}} - ",
+              
+             in[0], in[1], in[2], in[3], 
+             in[4], in[5], in[6], in[7],
+             in[8], in[9], in[10], in[11], 
+             in[12], in[13], in[14], in[15],
+             
+             out[0], out[1], out[2], out[3], 
+             out[4], out[5], out[6], out[7],
+             out[8], out[9], out[10], out[11], 
+             out[12], out[13], out[14], out[15]
+            );
+    
+   fflush(stdout);
+   func(4, board);
+    if (
+          (board[0][0]!=out[0])||(board[0][1]!=out[1])||(board[0][2]!=out[2])|| (board[0][3]!=out[3]) ||
+          (board[1][0]!=out[4])||(board[1][1]!=out[5])||(board[1][2]!=out[6])|| (board[1][3]!=out[7]) ||
+          (board[2][0]!=out[8])||(board[2][1]!=out[9])||(board[2][2]!=out[10])|| (board[2][3]!=out[11]) ||
+          (board[3][0]!=out[12])||(board[3][1]!=out[13])||(board[3][2]!=out[14])|| (board[3][3]!=out[15]) )
+        {
+	     printf("FAILED: {{%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}} became {{%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}} instead of"
+                 " {{%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}, {%d,%d,%d,%d}}\n",
+                 in[0], in[1], in[2], in[3], 
+                 in[4], in[5], in[6], in[7],
+                 in[8], in[9], in[10], in[11], 
+                 in[12], in[13], in[14], in[15],
+                 board[0][0], board[0][1], board[0][2], board[0][3],
+                 board[1][0], board[1][1], board[1][2], board[1][3],
+                 board[2][0], board[2][1], board[2][2], board[2][3],
+                 board[3][0], board[3][1], board[3][2], board[3][3],
+                 out[0], out[1], out[2], out[3], 
+                 out[4], out[5], out[6], out[7],
+                 out[8], out[9], out[10], out[11], 
+                 out[12], out[13], out[14], out[15]);
+          
+          return -1;
+        } 
+       
+      printf("PASSED.\n");
+      return 0;
+    
+}
+
+  
 int main(int argc,char **argv)
 {
   int e=0;
