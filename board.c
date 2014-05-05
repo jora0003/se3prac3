@@ -43,3 +43,14 @@ int board_read_column(int size, int **board, int column, int *column_Array){
    }
    return 0;
 }
+
+int board_set_column(int size, int **board, int column, int *column_Array){
+   if (!board || size<1||size>255 || !column_Array) return -1;
+   int index = 0;
+   for(index = 0; index < size; ++index)
+   {
+      board[index][column] = column_Array[index];
+   }
+   return 0;
+}
+
