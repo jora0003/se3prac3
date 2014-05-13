@@ -6,6 +6,7 @@ int read_input();
 #define GO_DOWN 8
 #define GO_NOWHERE 0
 #define INVALID_INPUT -1
+#define WIN_SCORE 2048
 
 int tilt_board_left(int size,int **board);
 int tilt_board_right(int size,int **board);
@@ -21,3 +22,4 @@ int shift_line_left(int length, int *line);
 int shift_line_Right(int length, int *line);
 int board_read_column(int size, int **board, int column, int *column_Array);
 int board_set_column(int size, int **board, int column, int *column_Array);
+int board_won(int size, int **board);
