@@ -10,10 +10,10 @@ int parse_input(char *line)
 	  ||(line[strlen(line)-1]=='\r')))
     line[strlen(line)-1]=0;
 
-  if (!strcasecmp(line,"l")) return GO_LEFT; // left
-  if (!strcasecmp(line,"r")) return GO_RIGHT; // right
-  if (!strcasecmp(line,"u")) return GO_UP; // up
-  if (!strcasecmp(line,"d")) return GO_DOWN; // down
+ if (!strcasecmp(line,"l")) return GO_UP; // left
+  if (!strcasecmp(line,"r")) return GO_DOWN; // right
+  if (!strcasecmp(line,"u")) return GO_LEFT; // up
+  if (!strcasecmp(line,"d")) return GO_RIGHT; // down
   if (line[0]==0) return GO_NOWHERE; // blank input
   return INVALID_INPUT; // invalid input
 }
