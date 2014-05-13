@@ -432,7 +432,48 @@ int vector_board_read_column(int in[16], int column, int out[4])
     
 }
 
- 
+ int ts_tile(int in[16], int error)
+{
+   int **board = calloc(4, sizeof(int *));
+   int i = 0;
+   int j = 0;
+   for(i = 0; i < 4; ++i)
+   {
+      board[i] = calloc(4, sizeof(int));
+      for(j = 0; j < 4; ++j)
+      {
+         int index = 4 * i + j;
+         board[i][j] =  in[index];
+      }
+   }
+
+   printf("Spawn a tile in: \n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n yields  %s - ",
+          in[0], in[1], in[2], in[3], 
+          in[4], in[5], in[6], in[7],
+          in[8], in[9], in[10], in[11], 
+          in[12], in[13], in[14], in[15],
+          error == 0 ? "Success" : "Failure"
+         );
+         
+   fflush(stdout);
+   int value = board_spawn_tile(4, board);
+   
+   if ( (value != error && (value < 0)) || (error == 0 && value < 0))
+        {
+	     printf("FAILED: Spawning a tile in: \n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n{%d,%d,%d,%d}\n ",
+                 in[0], in[1], in[2], in[3], 
+                 in[4], in[5], in[6], in[7],
+                 in[8], in[9], in[10], in[11], 
+                 in[12], in[13], in[14], in[15]
+                 );
+       
+          return -1;
+        } 
+     
+      printf("PASSED.\n");
+      return 0;
+}
+
 
 
 int board_vector_down( int befor[16], int after[16])
@@ -619,6 +660,23 @@ int board_vector_up( int befor[16], int after[16])
    return e;
 }
 
+int test_board_spawn_tile()
+{
+   int e = 0;
+   int inpot1[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+   e|=ts_tile(inpot1, 0);   
+      
+   int inpot2[16] = {2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,2};
+   e|=ts_tile(inpot2, 0);
+   
+   int inpot3[16] = {2,2,2,0,2,2,2,0,2,2,2,0,2,2,0,2};
+   e|=ts_tile(inpot3, 0);
+   
+   int inpot4[16] = {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4};
+   e|=ts_tile(inpot4, -2);
+   
+   return e;
+}
 int main(int argc,char **argv)
 {
   int e=0;
@@ -634,5 +692,6 @@ int main(int argc,char **argv)
   e|= test_tilt_board_left();
   e|= test_tilt_board_Right();
   e|= test_tilt_board_up();
+  e|=test_board_spawn_tile();
   return e;
 }
