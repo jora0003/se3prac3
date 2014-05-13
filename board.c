@@ -87,3 +87,23 @@ int board_spawn_tile(int size, int **board)
 }
 return -2;     
 }
+
+
+int board_won(int size, int **board)
+{
+   if (!board || size<1||size>255) return -1;  
+   int  i = 0;
+   int j = 0;
+   for(i = 0; i < size; ++i)
+   {
+     for(j = 0; j < size; ++j)
+     {
+        if(board[i][j] == WIN_SCORE)
+        {
+            
+           return 1;
+        }
+     }
+   }
+   return 0;
+}
