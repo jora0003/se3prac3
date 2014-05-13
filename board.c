@@ -53,4 +53,37 @@ int board_set_column(int size, int **board, int column, int *column_Array){
    }
    return 0;
 }
-
+int board_spawn_tile(int size, int **board)
+{
+  if (!board || size<1||size>255) return -1;
+  
+  int values[2] = {2, 4};
+  int i,j,s=1;  
+    
+  
+  while(s) {
+  	
+  	int row = rand() % size;
+     int col = rand() % size;
+  	
+  	 if(board[row][col] == 0)
+     {
+        board[row][col] = values[rand() % 2];
+        return 0;
+     }
+  	else if(board[row][col] != 0){ 
+  		 for(i=0;i<4;++i){
+	             for(j=0;j<4;++j){
+		            if(board[i][j]==0){
+		            	board[i][j]=values[rand() % 2];
+		            	return 0;
+		            }
+		                  	
+				 }
+	    	}
+	  }
+	 break;	
+										   
+}
+return -2;     
+}
