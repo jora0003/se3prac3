@@ -107,3 +107,23 @@ int board_won(int size, int **board)
    }
    return 0;
 }
+int board_lost(int size, int **board)
+{
+   if (!board || size<1||size>255) return -1; 
+   int  i = 0;
+   int j = 0;
+   
+      for(i = 0; i < size; ++i)
+   {
+      for(j = 0; j < size; ++j)
+      {
+         if((board[i][j] == 0) || (i < size - 1 && board[i][j] == board[i+1][j]) ||(j < size - 1 && board[i][j] == board[i][j+1]) )
+         {
+            return 0;
+         }
+      }
+   }
+    
+   return 1;
+}
+
